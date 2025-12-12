@@ -18,3 +18,6 @@ This is the first commit I have done in this project, I have made a basic implem
 - Add Keyboard Proximity error resolution
 - Make the result generation much faster using Data Structres and pre-computation.
 - Integrate AI&ML.
+
+*Planning on completing this project within a month*
+
