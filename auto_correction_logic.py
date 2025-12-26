@@ -17,10 +17,25 @@ with open(corpus_path, "r") as f:
 word_tokens = word_tokenize(text)
 word_counter = Counter(word_tokens)
 
-def max_f(i, s):
-    if (len(i) == 0): return ""
-    return min(i, key=lambda w: (edit_distance(s, w, substitution_cost=2, transpositions=True), -word_counter[w]))
-    # return min(i, key=lambda w: (lev(s, w), -word_counter[w]))
+def max_f(candidates, word):
+    # if (len(candidates) == 0): return ""
+    # return min(candidates, key=lambda w: (edit_distance(word, w, substitution_cost=2, transpositions=True), -word_counter[w]))
+    # return min(candidates, key=lambda w: (lev(word, w), -word_counter[w]))
+    if not candidates:
+        return []
+
+    scored = [
+        (
+            edit_distance(word, w, substitution_cost=2, transpositions=True),
+            -word_counter[w],
+            w
+        )
+        for w in candidates
+    ]
+
+    best_score = min(scored)[:2]  # (distance, -freq)
+    print(sorted(scored))
+    return [w for d, f, w in scored if (d, f) == best_score]
 
 
 sounds = dict()
