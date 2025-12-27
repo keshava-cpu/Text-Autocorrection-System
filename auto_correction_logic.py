@@ -33,9 +33,10 @@ def max_f(candidates, word):
         for w in candidates
     ]
 
-    best_score = min(scored)[:2]  # (distance, -freq)
-    print(sorted(scored))
-    return [w for d, f, w in scored if (d, f) == best_score]
+    # best_score = min(scored)[:2]  # (distance, -freq)
+    # print(sorted(scored))
+    # return [w for d, f, w in scored if (d, f) == best_score]
+    return sorted(scored)
 
 
 sounds = dict()
@@ -49,8 +50,8 @@ for i in word_tokens:
     except Exception:
         pass
 
-print(max_f(sounds.get(soundex("expectaon"), set()), "expectaon"))
-print(sounds.get(soundex("expectaon"), set()), "expectaon")
+# print(max_f(sounds.get(soundex("expectaon"), set()), "expectaon"))
+# print(sounds.get(soundex("expectaon"), set()), "expectaon")
 
 metasounds = dict()
 
@@ -59,6 +60,21 @@ for i in word_tokens:
         metasounds.setdefault(metaphone(i), set()).add(i.lower())
     except Exception:
         pass
-print(max_f(metasounds.get(metaphone("expectaon"), set()), "expectaon"))
+# print(max_f(metasounds.get(metaphone("expectaon"), set()), "expectaon"))
 # print(metasounds)
-print(metasounds.get(metaphone("expectaon"), set()))
+# given = input().strip()
+# print(max_f([i for a, b, i in max_f(metasounds.get(metaphone(given), set()), given)] + [i for a, b, i in max_f(sounds.get(soundex(given), set()), given)], given))
+# Code for taking in Any amount of values given by the user:
+
+print("***This is a REPL (please press Enter to exit)***")
+while 1:
+    given = input("> ").strip()
+    if (len(given) == 0): 
+        print("Exiting...")
+        break
+    candidates = sorted(list(set(max_f([i[-1] for i in max_f(metasounds.get(metaphone(given), set()), given)] + [i[-1] for i in max_f(sounds.get(soundex(given), set()), given)], given))))
+    
+    print(f"Top 3 matches: \nmatches:")
+    for i in range(3):
+        print(candidates[i][-1], end=" ")
+    print()
