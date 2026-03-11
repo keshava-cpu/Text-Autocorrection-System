@@ -6,18 +6,29 @@ My aim for this project is to get to know:
 - Implementation of AI&ML in real-life scenarios.
 
 ## The current Status of this project
-This is the first commit I have done in this project, I have made a basic implementation of a text-autocorrection system by utilizing various libraries in Python. 
+The project has come a long way, I have added the basic version of the project. Then, I build upon that to finalize on an updated version.
+The Current Project has these features:
+- candidate generation (edits, phonetic, keyboard proximity, affixes)
+- multi-factor scoring (frequency, edit distance, positional similarity, phonetic)
+- normalization for contractions, repeated chars and leet/substitutions
 
 ### Implementation structure:
-- I have used `nltk` library to tokenize words from `big.txt` corpus.
-- Then, used `collections` library to make a frequency map.
-- With the help of `soundex` and `metaphone`, which come with the `jellyfish` library, I made a basic work-around for a text-autocorrection system.
-- Also, with the help of `edit-distance` which measures the **Levenshtein distance** between two words, I optimized the results.
+1. Load a corpus (big.txt) and build unigram frequency counts.
+2. Generate candidate corrections using:
+     - edits1 (single-edit variants) and second-order edits
+     - phonetic matching (soundex/metaphone)
+     - keyboard proximity swaps
+     - prefix/suffix heuristics
+     - normalization transforms (numbers to letters, repeated chars, contractions)
+3. Score candidates by combining:
+     - normalized unigram frequency
+     - edit distance (inverse)
+     - sequence similarity (difflib)
+     - positional character similarity
+     - phonetic match indicator
+4. Return top candidates sorted by combined score.
 
 ### To Do:
-- Add Keyboard Proximity error resolution
 - Make the result generation much faster using Data Structres and pre-computation.
 - Integrate AI&ML.
-
-*Planning on completing this project within a month*
 
